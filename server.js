@@ -145,7 +145,7 @@ function cleanMetadata(raw) {
 
 async function resolveFreshSignedUrls(url, videoFormat, audioFormat) {
   return new Promise((resolve, reject) => {
-    let cmd = `yt-dlp -J --js-runtimes "node:${process.execPath}" -f "${videoFormat}+${audioFormat}" "${url}"`;
+    let cmd = `yt-dlp -J --js-runtimes "node:${process.execPath}" --remote-components ejs:github -f "${videoFormat}+${audioFormat}" "${url}"`;
     const cookiePath = config.getCookiePath ? config.getCookiePath() : null;
     if (cookiePath) {
       cmd += ` --cookies "${cookiePath}"`;
@@ -216,7 +216,7 @@ app.get('/api/v1/metadata', apiLimiter, async (req, res) => {
     }
 
     // Cache Miss. Exec yt-dlp to extract info
-    let cmd = `yt-dlp -J --js-runtimes "node:${process.execPath}" "${url}"`;
+    let cmd = `yt-dlp -J --js-runtimes "node:${process.execPath}" --remote-components ejs:github "${url}"`;
     const cookiePath = config.getCookiePath();
     if (cookiePath) {
       cmd += ` --cookies "${cookiePath}"`;
