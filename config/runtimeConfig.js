@@ -41,6 +41,9 @@ const runtimeConfig = {
 
   // yt-dlp cookie path configuration
   COOKIE_FILE_PATH: null,
+  getCookiePath() {
+    return this.COOKIE_FILE_PATH;
+  }
 };
 
 // Auto-decode Base64 Cookies Securely if provided
@@ -71,7 +74,13 @@ if (process.env.YTDLP_COOKIES_B64) {
     console.error('[Config Error] Failed to decode and save YTDLP_COOKIES_B64:', err.message);
   }
 } else {
-  console.log('[Config] Running anonymously: No YTDLP_COOKIES_B64 environment variable detected.');
+  const localCookiesPath = path.join(__dirname, '..', 'cookies', 'cookies.txt');
+  if (fs.existsSync(localCookiesPath)) {
+    runtimeConfig.COOKIE_FILE_PATH = localCookiesPath;
+    console.log(`[Config] Automatically loaded local cookies from: ${localCookiesPath}`);
+  } else {
+    console.log('[Config] Running anonymously: No YTDLP_COOKIES_B64 or local cookies.txt detected.');
+  }
 }
 
 module.exports = runtimeConfig;
