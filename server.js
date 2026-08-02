@@ -22,7 +22,7 @@ const PROCESS_METRICS_TOKEN = process.env.METRICS_TOKEN;
 
 // Synchronous Active Slots (Atomic Semaphore)
 let activeSlotsCount = 0;
-const MAX_CONCURRENT_MERGES = 50;
+const MAX_CONCURRENT_MERGES = 5;
 const activeFFmpegProcesses = new Set();
 
 // Telemetry Metrics Store
