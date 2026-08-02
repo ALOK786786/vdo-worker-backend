@@ -1,16 +1,15 @@
 FROM node:18-slim
 
-# Install system dependencies (ffmpeg, python3, curl)
+# Install system dependencies (ffmpeg, python3, pip, curl)
 RUN apt-get update && apt-get install -y \
     ffmpeg \
     python3 \
+    python3-pip \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install yt-dlp globally (forced update for EJS solver)
-RUN curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp \
-    && chmod a+rx /usr/local/bin/yt-dlp \
-    && yt-dlp --version
+# Install yt-dlp using pip with [default] extra to bundle EJS challenge solver scripts natively
+RUN pip3 install --no-cache-dir --break-system-packages "yt-dlp[default]"
 
 # Create app directory
 WORKDIR /usr/src/app
