@@ -15,7 +15,7 @@ const runtimeConfig = {
 
   // Rate Limiting (Downloads per hour per IP)
   RATE_LIMITS: {
-    GUEST: parseInt(process.env.GUEST_DOWNLOADS_PER_HOUR) || 10,
+    GUEST: parseInt(process.env.GUEST_DOWNLOADS_PER_HOUR) || 100,
     USER: parseInt(process.env.USER_DOWNLOADS_PER_HOUR) || 50,
   },
 
